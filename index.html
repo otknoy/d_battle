@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="js/app.js"></script>
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+  <body>
+
+    <h1>Geolocation API sample</h1>
+    
+    <div id="geolocation">
+      <p>latitude:  <span id="lat"></span></p>
+      <p>longitude: <span id="lng"></span></p>
+    </div>
+    <script>
+     app.getGeolocation()
+	.then(function(coords) {
+	  document.getElementById("lat").innerHTML = coords.latitude;
+	  document.getElementById("lng").innerHTML = coords.longitude;
+	});
+    </script>
+
+  </body>
+</html>
