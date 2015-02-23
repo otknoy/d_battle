@@ -13,3 +13,26 @@ app.getGeolocation = function() {
 
     return deferred.promise;
 };
+
+app.getCSVFile = function(filename) {
+    var deferred = Promise.defer();
+
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+	var csv = [];
+	var LF = String.fromCharCode(10);
+	var lines = xhr.responseText.split(LF);
+	for (var i = 0; i < lines.length;++i) {
+	    var cells = lines[i].split(",");
+	    if(cells.length != 1) {
+		csv.push(cells);
+	    }
+	}
+	deferred.resolve(csv);
+    };
+
+    xhr.open("GET", filename, true);
+    xhr.send(null);
+
+    return deferred.promise;
+};

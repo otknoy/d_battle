@@ -7,7 +7,6 @@
   <body>
 
     <h1>Geolocation API sample</h1>
-    
     <div id="geolocation">
       <p>latitude:  <span id="lat"></span></p>
       <p>longitude: <span id="lng"></span></p>
@@ -18,6 +17,29 @@
 	  document.getElementById("lat").innerHTML = coords.latitude;
 	  document.getElementById("lng").innerHTML = coords.longitude;
 	});
+    </script>
+
+
+    <h1>CSV sample</h1>
+    <div id="csv"></div>
+    <script>
+     app.getCSVFile("data/test.csv")
+	   .then(function(csv) {
+	     var output = "<table border=\"1\">";
+	     for (var i = 0; i < csv.length; i++) {
+	       output += "<tr>"
+	       for (var j = 0; j < csv[i].length; j++) {
+		 if (i == 0) {
+		   output += "<th>" + csv[i][j] + "</th>";
+		 } else {
+		   output += "<td>" + csv[i][j] + "</td>";
+		 }
+	       }
+	       output += "</tr>"
+	     }
+	     output += "</table>"
+	     document.getElementById("csv").innerHTML = output;
+	   });
     </script>
 
   </body>
