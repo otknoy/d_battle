@@ -14,7 +14,7 @@ app.getGeolocation = function() {
     return deferred.promise;
 };
 
-app.getCSVFile = function(filename) {
+app.loadCSVFile = function(filename) {
     var deferred = Promise.defer();
 
     var xhr = new XMLHttpRequest();
