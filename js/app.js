@@ -33,7 +33,6 @@ app.loadCSVFile = function(filename) {
 	    }
 	    data.push(item);
 	}
-
 	return data;
     }
 
