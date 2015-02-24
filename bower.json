@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "d3": "~3.5.5",
-    "radar-chart-d3": "git@github.com:alangrafu/radar-chart-d3.git"
+    "radar-chart-d3": "git@github.com:alangrafu/radar-chart-d3.git",
+    "jquery": "~2.1.3"
   }
 }
