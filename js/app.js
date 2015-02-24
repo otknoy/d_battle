@@ -58,3 +58,18 @@ app.map.createMap = function(id, lat, lng, zoom) {
     var map = new google.maps.Map(document.getElementById(id), mapOptions);
     return map;
 };
+
+app.map.createCircle = function(map, lat, lng, r) {
+    var options = {
+	strokeColor: '#FF0000',
+	strokeOpacity: 0.8,
+	strokeWeight: 2,
+	fillColor: '#FF0000',
+	fillOpacity: 0.35,
+	map: map,
+	center: new google.maps.LatLng(lat, lng),
+	radius: r
+    };
+    var circle = new google.maps.Circle(options);
+    return circle;
+};

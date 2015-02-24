@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body>
+
+    <h1>Google Map API</h1>
+
+    <div id="geolocation">
+      <p>latitude:  <span id="lat"></span></p>
+      <p>longitude: <span id="lng"></span></p>
+    </div>
+
+    <div id="map-canvas" style="width: 480px; height: 480px"></div>
+
+    <script>
+     var map = null;
+
+     app.getGeolocation()
+	.then(function(coords) {
+	  var lat = 34.705895;
+	  var lng = 135.494474
+	  // var lat = coords.latitude;
+	  // var lng = coords.longitude;
+	  map = app.map.createMap('map-canvas', lat, lng, 11);
+
+	  document.getElementById("lat").innerHTML = lat;
+	  document.getElementById("lng").innerHTML = lng;
+
+
+	  app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
+	     .then(function(data) {
+	       data = data.slice(0, 100);
+	       for (var i = 0; i < data.length; i++) {
+		 var d = data[i];
+
+		 var lat = parseFloat(d["Y"]);
+		 var lng = parseFloat(d["X"]);
+		 var circle = app.map.createCircle(map, lat, lng, 1000);
+	       }
+	     });
+	});
+
+    </script>
+
+  </body>
+</html>
