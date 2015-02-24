@@ -20,18 +20,10 @@ app.loadCSVFile = function(filename) {
     function parseCSV(csv) {
 	var LF = String.fromCharCode(10);
 	var rows = xhr.responseText.split(LF);
-	var labels = rows[0].split(",");
-
 	var data = [];
-	for (var i = 1; i < rows.length; i++) {
-	    var item = {};
+	for (var i = 0; i < rows.length; i++) {
 	    var cells = rows[i].split(",");
-	    for (var j = 0; j < cells.length; j++) {
-		var key = labels[j];
-		var value = cells[j];
-		item[key] = value;
-	    }
-	    data.push(item);
+	    data.push(cells);
 	}
 	return data;
     }

@@ -24,22 +24,22 @@
     <div id="csv"></div>
     <script>
      app.loadCSVFile("data/test.csv")
-	   .then(function(csv) {
-	     var output = "<table border=\"1\">";
-	     for (var i = 0; i < csv.length; i++) {
-	       output += "<tr>"
-	       for (var j = 0; j < csv[i].length; j++) {
-		 if (i == 0) {
-		   output += "<th>" + csv[i][j] + "</th>";
-		 } else {
-		   output += "<td>" + csv[i][j] + "</td>";
-		 }
-	       }
-	       output += "</tr>"
-	     }
-	     output += "</table>"
-	     document.getElementById("csv").innerHTML = output;
-	   });
+	.then(function(data) {
+	  var output = "<table border=\"1\">";
+	  for (var i = 0; i < data.length; i++) {
+	    output += "<tr>"
+	    for (var j = 0; j < data[i].length; j++) {
+	      if (i == 0) {
+		output += "<th>" + data[i][j] + "</th>";
+	      } else {
+		output += "<td>" + data[i][j] + "</td>";
+	      }
+	    }
+	    output += "</tr>"
+	  }
+	  output += "</table>"
+	  document.getElementById("csv").innerHTML = output;
+	});
     </script>
 
   </body>
