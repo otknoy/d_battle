@@ -1,0 +1,19 @@
+{
+  "name": "deru_battle",
+  "version": "0.0.0",
+  "homepage": "https://github.com/otknoy/d_battle",
+  "authors": [
+    "otknoy <otknoy@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "radar-chart-d3": "git@github.com:alangrafu/radar-chart-d3.git"
+  }
+}
