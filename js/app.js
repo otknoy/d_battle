@@ -17,20 +17,28 @@ app.getGeolocation = function() {
 app.loadCSVFile = function(filename) {
     var deferred = Promise.defer();
 
-    function parseCSV(csv) {
+    function parse(csv) {
 	var LF = String.fromCharCode(10);
 	var rows = xhr.responseText.split(LF);
+	var labels = rows[0].split(",");
+
 	var data = [];
-	for (var i = 0; i < rows.length; i++) {
+	for (var i = 1; i < rows.length; i++) {
+	    var item = {};
 	    var cells = rows[i].split(",");
-	    data.push(cells);
+	    for (var j = 0; j < cells.length; j++) {
+		var key = labels[j];
+		var value = cells[j];
+		item[key] = value;
+	    }
+	    data.push(item);
 	}
 	return data;
     }
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
-	deferred.resolve(parseCSV(xhr.responseText));
+	deferred.resolve(parse(xhr.responseText));
     };
 
     xhr.open("GET", filename, true);
