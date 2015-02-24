@@ -25,7 +25,7 @@
 	  var lng = 135.494474
 	  // var lat = coords.latitude;
 	  // var lng = coords.longitude;
-	  map = app.map.createMap('map-canvas', lat, lng, 11);
+	  map = app.map.createMap('map-canvas', lat, lng, 15);
 
 	  document.getElementById("lat").innerHTML = lat;
 	  document.getElementById("lng").innerHTML = lng;
@@ -33,13 +33,24 @@
 
 	  app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
 	     .then(function(data) {
-	       data = data.slice(0, 100);
+	       data = data.map(app.parseData);
+	       console.log(data.length);
+
+	       var bounds = app.map.getMapBounds(map);
+	       data = app.filterDataByRegion(data,
+				       bounds.lat1, bounds.lng1,
+				       bounds.lat2, bounds.lng2);
+	       console.log(data.length);
+
+	       data = app.sampleData(data, 100);
+	       console.log(data.length);
+
 	       for (var i = 0; i < data.length; i++) {
 		 var d = data[i];
 
-		 var lat = parseFloat(d["Y"]);
-		 var lng = parseFloat(d["X"]);
-		 var circle = app.map.createCircle(map, lat, lng, 1000);
+		 var lat = d.latitude;
+		 var lng = d.longitude;
+		 var circle = app.map.createCircle(map, lat, lng, 100);
 	       }
 	     });
 	});
