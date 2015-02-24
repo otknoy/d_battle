@@ -38,3 +38,15 @@ app.loadCSVFile = function(filename) {
 
     return deferred.promise;
 };
+
+
+app.map = {};
+
+app.map.createMap = function(id, lat, lng, zoom) {
+    var mapOptions = {
+	center: new google.maps.LatLng(lat, lng),
+	zoom: zoom
+    };
+    var map = new google.maps.Map(document.getElementById(id), mapOptions);
+    return map;
+};

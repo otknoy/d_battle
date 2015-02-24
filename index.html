@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/app.js"></script>
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
+
+    <h1>Google Map API</h1>
+    <div id="map-canvas" style="width: 640px; height: 480px"></div>
+    <script>
+     var map = app.map.createMap('map-canvas', 34.705895, 135.494474, 12);
+     console.log(map);
+    </script>
 
     <h1>Geolocation API sample</h1>
     <div id="geolocation">
