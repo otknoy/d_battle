@@ -40,16 +40,13 @@
 	  app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
 	     .then(function(data) {
 	       data = data.map(app.parseData);
-	       console.log(data.length);
 
 	       var bounds = Map.getMapBounds(map);
 	       data = app.filterDataByRegion(data,
 				       bounds.lat1, bounds.lng1,
 				       bounds.lat2, bounds.lng2);
-	       console.log(data.length);
 
 	       data = app.sampleData(data, 100);
-	       console.log(data.length);
 
 	       for (var i = 0; i < data.length; i++) {
 		 var d = data[i];
