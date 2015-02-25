@@ -111,5 +111,3 @@ Data.filter = function(data, lat1, lng1, lat2, lng2, sample) {
     data = Data.sample(data, sample);
     return data;
 };
-
-Data.places = 0;
