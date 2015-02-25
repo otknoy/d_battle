@@ -23,19 +23,18 @@
     <div id="map-canvas" style="width: 480px; height: 480px"></div>
 
     <script>
-     var map = null;
-
      app.getGeolocation()
 	.then(function(coords) {
 	  var lat = 34.705895;
 	  var lng = 135.494474
 	  // var lat = coords.latitude;
 	  // var lng = coords.longitude;
-	  map = Map.createMap('map-canvas', lat, lng, 15);
+	  var map = Map.createMap('map-canvas', lat, lng, 15);
+
+	  Map.createMarker(map, '現在地', lat, lng);
 
 	  document.getElementById("lat").innerHTML = lat;
 	  document.getElementById("lng").innerHTML = lng;
-
 
 	  app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
 	     .then(function(data) {
@@ -57,8 +56,7 @@
 	       }
 	     });
 	});
-
-    </script>
+     </script>
 
   </body>
 </html>

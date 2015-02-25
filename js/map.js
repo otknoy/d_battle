@@ -20,6 +20,16 @@ Map.getMapBounds = function(map) {
     return bounds;
 };
 
+Map.createMarker = function(map, title, lat, lng) {
+    var marker = new google.maps.Marker({
+	position: new google.maps.LatLng(lat, lng),
+	map: map,
+	title : title,
+	draggable: false
+    });
+    return marker;
+};
+
 Map.createCircle = function(map, lat, lng, r) {
     var options = {
 	strokeColor: '#FF0000',
