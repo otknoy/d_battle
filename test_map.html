@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
     <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/app.js"></script>
@@ -20,43 +22,62 @@
       <p>longitude: <span id="lng"></span></p>
     </div>
 
-    <div id="map-canvas" style="width: 480px; height: 480px"></div>
+    <div id="map-canvas" style="height: 480px"></div>
 
     <script>
+     var lat = 34.705895;
+     var lng = 135.494474
+     var map = Map.createMap('map-canvas', lat, lng, 15);
+
      app.getGeolocation()
 	.then(function(coords) {
 	  var lat = 34.705895;
-	  var lng = 135.494474
+	  var lng = 135.494474;
 	  // var lat = coords.latitude;
 	  // var lng = coords.longitude;
-	  var map = Map.createMap('map-canvas', lat, lng, 15);
+	  map.setCenter(new google.maps.LatLng(lat, lng))
 
-	  Map.createMarker(map, '現在地', lat, lng);
+	    Map.createMarker(map, '現在地', lat, lng);
 
 	  document.getElementById("lat").innerHTML = lat;
 	  document.getElementById("lng").innerHTML = lng;
-
-	  app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
-	     .then(function(data) {
-	       data = data.map(app.parseData);
-
-	       var bounds = Map.getMapBounds(map);
-	       data = app.filterDataByRegion(data,
-				       bounds.lat1, bounds.lng1,
-				       bounds.lat2, bounds.lng2);
-
-	       data = app.sampleData(data, 100);
-
-	       for (var i = 0; i < data.length; i++) {
-		 var d = data[i];
-
-		 var lat = d.latitude;
-		 var lng = d.longitude;
-		 var circle = Map.createCircle(map, lat, lng, 100);
-	       }
-	     });
 	});
-     </script>
+
+     app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
+	.then(function(data) {
+	  data = data.map(app.parseData);
+	  var circles = [];
+
+	  var updateData = function() {
+	    var bounds = Map.getMapBounds(map);
+	    var filterData = app.filterDataByRegion(data,
+					  bounds.lat1, bounds.lng1,
+					  bounds.lat2, bounds.lng2);
+	    var sampleData = app.sampleData(filterData, 32);
+
+
+	    for (var i = 0; i < sampleData.length; i++) {
+	      var d = sampleData[i];
+
+	      var lat = d.latitude;
+	      var lng = d.longitude;
+	      var circle = Map.createCircle(map, lat, lng, 100);
+	      circles.push(circle);
+	    }
+	  };
+
+	  updateData();
+
+	  google.maps.event.addListener(map, 'center_changed', function() {
+	    circles.forEach(function(c, i) {
+	      c.setMap(null);
+	    });
+	    circles = [];
+
+	    updateData();
+	  });
+	});
+    </script>
 
   </body>
 </html>
