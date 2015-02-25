@@ -42,9 +42,8 @@
 	  document.getElementById("lng").innerHTML = lng;
 	});
 
-     Data.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
+     Data.loadOsakaPlaces()
 	.then(function(data) {
-	  data = data.map(app.parseData);
 	  var circles = [];
 
 	  var updateData = function() {
