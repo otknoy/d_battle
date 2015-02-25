@@ -6,14 +6,13 @@
     <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/data.js"></script>
     <script src="js/map.js"></script>
   </head>
   <body>
 
 
     <div id="test"></div>
-
-
 
     <h1>Google Map API</h1>
 
@@ -43,21 +42,20 @@
 	  document.getElementById("lng").innerHTML = lng;
 	});
 
-     app.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
+     Data.loadCSVFile("data/mapnavoskdat_shisetsuall.csv")
 	.then(function(data) {
 	  data = data.map(app.parseData);
 	  var circles = [];
 
 	  var updateData = function() {
 	    var bounds = Map.getMapBounds(map);
-	    var filterData = app.filterDataByRegion(data,
-					  bounds.lat1, bounds.lng1,
-					  bounds.lat2, bounds.lng2);
-	    var sampleData = app.sampleData(filterData, 32);
+	    var samples = Data.filter(data,
+				      bounds.lat1, bounds.lng1,
+				      bounds.lat2, bounds.lng2,
+				      32);
 
-
-	    for (var i = 0; i < sampleData.length; i++) {
-	      var d = sampleData[i];
+	    for (var i = 0; i < samples.length; i++) {
+	      var d = samples[i];
 
 	      var lat = d.latitude;
 	      var lng = d.longitude;
