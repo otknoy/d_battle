@@ -63,8 +63,6 @@
 	    }
 	  };
 
-	  updateData();
-
 	  google.maps.event.addListener(map, 'center_changed', function() {
 	    circles.forEach(function(c, i) {
 	      c.setMap(null);
