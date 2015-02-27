@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="js/app.js"></script>
+    <script src="js/data.js"></script>
   </head>
   <body>
 
     <h1>CSV sample</h1>
     <div id="csv"></div>
     <script>
-     app.loadCSVFile("data/test.csv")
+     Data.loadCSVFile("data/test.csv")
 	.then(function(data) {
+	  document.getElementById('csv').innerHTML = data;
 	  console.log(data);
 	  console.log(data[0]["x"]);
 	});
