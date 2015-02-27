@@ -30,12 +30,12 @@ Map.createMarker = function(map, title, lat, lng) {
     return marker;
 };
 
-Map.createCircle = function(map, lat, lng, r) {
+Map.createCircle = function(map, lat, lng, r, color) {
     var options = {
-	strokeColor: '#FF0000',
+	strokeColor: color,
 	strokeOpacity: 0.8,
 	strokeWeight: 2,
-	fillColor: '#FF0000',
+	fillColor: color,
 	fillOpacity: 0.35,
 	map: map,
 	center: new google.maps.LatLng(lat, lng),
@@ -44,3 +44,4 @@ Map.createCircle = function(map, lat, lng, r) {
     var circle = new google.maps.Circle(options);
     return circle;
 };
+
