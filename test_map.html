@@ -45,15 +45,10 @@
 
 	   var update = function() {
 	     var bounds = Map.getMapBounds(map);
-	     console.log(data.length);
-
 	     var filters = Data.filterByRegion(data,
 					       bounds.lat1, bounds.lng1,
 					       bounds.lat2, bounds.lng2);
-	     console.log(filters.length);
-
 	     var samples = Data.sample(filters, 64);
-	     console.log(samples.length);
 
 	     for (var i = 0; i < samples.length; i++) {
 	       var d = samples[i];
