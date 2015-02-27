@@ -39,36 +39,43 @@
 	  document.getElementById("lng").innerHTML = lng;
 	});
 
-     Data.loadOsakaPlaces()
-	.then(function(data) {
-	  var circles = [];
+     Data.loadOsakaData()
+	 .then(function(data) {
+	   var circles = [];
 
-	  var updateData = function() {
-	    var bounds = Map.getMapBounds(map);
-	    var samples = Data.filter(data,
-				      bounds.lat1, bounds.lng1,
-				      bounds.lat2, bounds.lng2,
-				      32);
+	   var update = function() {
+	     var bounds = Map.getMapBounds(map);
+	     console.log(data.length);
 
-	    for (var i = 0; i < samples.length; i++) {
-	      var d = samples[i];
+	     var filters = Data.filterByRegion(data,
+					       bounds.lat1, bounds.lng1,
+					       bounds.lat2, bounds.lng2);
+	     console.log(filters.length);
 
-	      var lat = d.latitude;
-	      var lng = d.longitude;
-	      var circle = Map.createCircle(map, lat, lng, 100);
-	      circles.push(circle);
-	    }
-	  };
+	     var samples = Data.sample(filters, 64);
+	     console.log(samples.length);
 
-	  google.maps.event.addListener(map, 'center_changed', function() {
-	    circles.forEach(function(c, i) {
-	      c.setMap(null);
-	    });
-	    circles = [];
+	     for (var i = 0; i < samples.length; i++) {
+	       var d = samples[i];
 
-	    updateData();
-	  });
-	});
+	       var lat = d.latitude;
+	       var lng = d.longitude;
+	       var circle = Map.createCircle(map, lat, lng, 100);
+	       circles.push(circle);
+	     }
+	   }
+
+	   update();
+
+	   google.maps.event.addListener(map, 'center_changed', function() {
+	     circles.forEach(function(c, i) {
+	       c.setMap(null);
+	     });
+	     circles = [];
+
+	     update();
+	   });
+	 });
     </script>
 
   </body>
