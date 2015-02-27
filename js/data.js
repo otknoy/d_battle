@@ -15,8 +15,7 @@ Data.loadFile = function(filename) {
 };
 
 Data.parseCSV = function(csv_text) {
-    var LF = String.fromCharCode(10);
-    var rows = csv_text.split(LF);
+    var rows = csv_text.split(/\r\n|\r|\n/);
 
     var data = [];
     for (var i = 0; i < rows.length; i++) {
