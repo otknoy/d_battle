@@ -55,7 +55,13 @@
 
 	       var lat = d.latitude;
 	       var lng = d.longitude;
-	       var circle = Map.createCircle(map, lat, lng, 100);
+
+	       var skill = Data.place2skill[d.type];
+	       var color = {"身体的パワー": "#FF0000",
+			    "社会的パワー": "#00FF00",
+			    "精神的パワー": "#0000FF"}[skill];
+
+	       var circle = Map.createCircle(map, lat, lng, 100, color);
 	       circles.push(circle);
 	     }
 	   }
