@@ -94,6 +94,37 @@ Data.parseOsakaData = function(dictArray) {
     });
 };
 
+Data.filterOsakaData = function(osakaData) {
+    return osakaData.filter(function(d) {
+	return d["icon_number"] in Data.id2place;
+    });
+};
+
+Data.addTypeToOsakaData = function(osakaData) {
+    return osakaData.map(function(d) {
+	var id = String(d["icon_number"]);
+	d["type"] = Data.id2place[id];
+	return d;
+    });
+};
+
+Data.loadOsakaData = function() {
+    var dfd = Promise.defer();
+
+    Data.loadFile("data/mapnavoskdat_shisetsuall.csv")
+	.then(function(data) {
+	    var csv = Data.parseCSV(data);
+	    var dict = Data.csv2dict(csv);
+	    var osakaData = Data.parseOsakaData(dict);
+
+	    osakaData = Data.filterOsakaData(osakaData);
+	    osakaData = Data.addTypeToOsakaData(osakaData);
+
+	    dfd.resolve(osakaData);
+	});
+
+    return dfd.promise;
+};
 
 
 

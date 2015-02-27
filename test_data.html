@@ -9,26 +9,9 @@
     <h1>CSV sample</h1>
     <div id="csv"></div>
     <script>
-     Data.loadFile("data/mapnavoskdat_shisetsuall.csv")
+     Data.loadOsakaData()
 	 .then(function(data) {
-	   var csv = Data.parseCSV(data);
-	   var dict = Data.csv2dict(csv);
-	   var osakaData = Data.parseOsakaData(dict);
-
-	   document.getElementById('csv').innerHTML = osakaData.length;
-
-	   osakaData = osakaData.filter(function(d) {
-	     return d["icon_number"] in Data.id2place;
-	   });
-	   console.log(osakaData[0]);
-	   osakaData = osakaData.map(function(d) {
-	     var id = String(d["icon_number"]);
-	     d["type"] = Data.id2place[id];
-	     return d;
-	   });
-	   console.log(osakaData[0]);
-
-	   document.getElementById('csv').innerHTML += "<br>" +  osakaData.length;
+	   document.getElementById('csv').innerHTML += "<br>" +  data.length;
 	 });
     </script>
 
