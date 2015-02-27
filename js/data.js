@@ -84,8 +84,8 @@ Data.parseOsakaData = function(dictArray) {
 	// X,Y,施設名,施設名かな,施設名（施設名かな）,所在地,地区名,TEL,FAX,詳細情報,開館時間,URL,バリアフリー情報,駐輪場 PC,駐輪場 携,大分類,小分類,カテゴリ,アイコン番号,施設ID
 	var item = {
 	    "id": parseInt(dict["施設ID"]),
-	    "latitude": parseFloat(dict["X"]),
-	    "longitude": parseFloat(dict["Y"]),
+	    "latitude": parseFloat(dict["Y"]),
+	    "longitude": parseFloat(dict["X"]),
 	    "name": dict["施設名"],
 	    "icon_number": parseInt(dict["アイコン番号"])
 	};
@@ -132,7 +132,6 @@ Data.filterByRegion = function(data, lat1, lng1, lat2, lng2) {
     var filteredData = [];
     for (var i = 0; i < data.length; i++) {
 	var d = data[i];
-
 	if (lat1 < d.latitude  && d.latitude  < lat2 &&
 	    lng1 < d.longitude && d.longitude < lng2) {
 	    filteredData.push(d);
