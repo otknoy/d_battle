@@ -1,79 +1,102 @@
 var Data = {};
 
 Data.loadFile = function(filename) {
-    var deferred = Promise.defer();
+    var dfd = Promise.defer();
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
-	deferred.resolve(xhr.responseText);
+	dfd.resolve(xhr.responseText);
     };
 
     xhr.open("GET", filename, true);
     xhr.send(null);
 
-    return deferred.promise;
+    return dfd.promise;
 };
 
-Data.loadOsakaPlaces = function() {
-    var deferred = Promise.defer();
+Data.parseCSV = function(csv_text) {
+    var LF = String.fromCharCode(10);
+    var rows = csv_text.split(LF);
 
-    function parseToMatrix(csv_text) {
-	var LF = String.fromCharCode(10);
-	var rows = csv_text.split(LF);
-
-	var data = [];
-	for (var i = 0; i < rows.length; i++) {
-	    var cells = rows[i].split(",");
-	    data.push(cells);
-	}
-	return data;
+    var data = [];
+    for (var i = 0; i < rows.length; i++) {
+	var cells = rows[i].split(",");
+	data.push(cells);
     }
-
-    function parseToDict(data) {
-	var dict = [];
-
-	var labels = data[0];
-	for (var i = 1; i < data.length; i++) {
-	    var item = {};
-	    for (var j = 0; j < data[i].length; j++) {
-		var key = labels[j];
-		var value = data[i][j];
-		item[key] = value;
-	    }
-
-	    item = {
-		"latitude":  parseFloat(item["Y"]),
-		"longitude": parseFloat(item["X"]),
-		"name": item["施設名"],
-		"icon_number": item["アイコン番号"]
-	    };
-
-	    dict.push(item);
-	}
-
-	return dict;
-    }
-
-    Data.loadFile("data/mapnavoskdat_icon.csv")
-	.then(function(icon_data) {
-	    var items = parseToMatrix(icon_data);
-	    items = items.slice(1, items.length-1);
-	    var id2place = {};
-	    for (var i = 0; i < items.length; i++) {
-		id2place[items[i][0]] = items[i][1];
-	    }
-
-	    Data.loadFile("data/mapnavoskdat_shisetsuall.csv")
-		.then(function(csv_data) {
-		    var data = parseToMatrix(csv_data);
-		    data = parseToDict(data);
-
-		    deferred.resolve(data);
-		});
-	});
-
-    return deferred.promise;
+    return data;
 };
+
+
+Data.csv2dict = function(csv) {
+    var dict = [];
+
+    var labels = csv[0];
+    for (var i = 1; i < csv.length; i++) {
+	var item = {};
+	for (var j = 0; j < csv[i].length; j++) {
+	    var key = labels[j];
+	    var value = csv[i][j];
+	    item[key] = value;
+	}
+	dict.push(item);
+    }
+
+    return dict;
+};
+
+
+Data.places = [
+    "交番",
+    "公園",
+    "幼稚園",
+    "保育園",
+    "図書館",
+    "小学校",
+    "中学校",
+    "高等学校",
+    "専門学校",
+    "短期大学・大学",
+    "銀行",
+    "市役所・町村役場",
+    "区役所",
+    "職業安定所"
+];
+
+Data.id2place = {
+    "119": "交番",
+    "154": "公園",
+    "125": "幼稚園",
+    "124": "保育園",
+    "151": "図書館",
+    "126": "小学校",
+    "127": "中学校",
+    "128": "高等学校",
+    "129": "専門学校",
+    "130": "短期大学・大学",
+    "203": "銀行",
+    "100": "市役所・町村役場",
+    "101": "区役所",
+    "11": "職業安定所"
+};
+
+
+Data.parseOsakaData = function(dictArray) {
+    return dictArray.map(function(dict) {
+	// X,Y,施設名,施設名かな,施設名（施設名かな）,所在地,地区名,TEL,FAX,詳細情報,開館時間,URL,バリアフリー情報,駐輪場 PC,駐輪場 携,大分類,小分類,カテゴリ,アイコン番号,施設ID
+	var item = {
+	    "id": parseInt(dict["施設ID"]),
+	    "latitude": parseFloat(dict["X"]),
+	    "longitude": parseFloat(dict["Y"]),
+	    "name": dict["施設名"],
+	    "icon_number": parseInt(dict["アイコン番号"])
+	};
+
+	return item;
+    });
+};
+
+
+
 
 Data.filterByRegion = function(data, lat1, lng1, lat2, lng2) {
     var filteredData = [];
