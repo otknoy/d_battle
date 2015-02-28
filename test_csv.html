@@ -8,11 +8,13 @@
     <h1>CSV sample</h1>
     <div id="csv"></div>
     <script>
-     Data.loadCSVFile("data/test.csv")
+     Data.loadFile("data/test.csv")
 	.then(function(data) {
-	  document.getElementById('csv').innerHTML = data;
-	  console.log(data);
-	  console.log(data[0]["x"]);
+	  var csv = Data.parseCSV(data);
+	  var dict = Data.csv2dict(csv);
+
+	  document.getElementById('csv').innerHTML = dict;
+	  console.log(dict);
 	});
     </script>
 
