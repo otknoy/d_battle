@@ -1,7 +1,7 @@
 var Data = {};
 
 Data.loadFile = function(filename) {
-    var dfd = Promise.defer();
+    var dfd = $.Deferred();
 
     var xhr = new XMLHttpRequest();
     xhr.onload = function() {
@@ -11,7 +11,7 @@ Data.loadFile = function(filename) {
     xhr.open("GET", filename, true);
     xhr.send(null);
 
-    return dfd.promise;
+    return dfd.promise();
 };
 
 Data.parseCSV = function(csv_text) {
@@ -151,11 +151,12 @@ Data.addTypeToOsakaData = function(osakaData) {
 };
 
 Data.loadOsakaData = function() {
-    var dfd = Promise.defer();
+    var dfd = $.Deferred();
 
     Data.loadFile("data/mapnavoskdat_shisetsuall.csv")
 	.then(function(data) {
 	    var csv = Data.parseCSV(data);
+
 	    var dict = Data.csv2dict(csv);
 	    var osakaData = Data.parseOsakaData(dict);
 
@@ -165,7 +166,7 @@ Data.loadOsakaData = function() {
 	    dfd.resolve(osakaData);
 	});
 
-    return dfd.promise;
+    return dfd.promise();
 };
 
 
