@@ -156,12 +156,11 @@ Data.loadOsakaData = function() {
     Data.loadFile("data/mapnavoskdat_shisetsuall.csv")
 	.then(function(data) {
 	    var csv = Data.parseCSV(data);
-
 	    var dict = Data.csv2dict(csv);
 	    var osakaData = Data.parseOsakaData(dict);
 
-	    osakaData = Data.filterOsakaData(osakaData);
-	    osakaData = Data.addTypeToOsakaData(osakaData);
+	    // osakaData = Data.filterOsakaData(osakaData);
+	    // osakaData = Data.addTypeToOsakaData(osakaData);
 
 	    dfd.resolve(osakaData);
 	});
