@@ -24,10 +24,17 @@
      var lat = 34.705895;
      var lng = 135.494474
      var map = Map.createMap('map-canvas', lat, lng, 15);
-     Map.createMarker(map, '現在地', lat, lng);
+     var currentLocation = Map.createMarker(map, '現在地', lat, lng, true);
 
-     document.getElementById("lat").innerHTML = lat;
-     document.getElementById("lng").innerHTML = lng;
+     // test
+     google.maps.event.addListener(currentLocation, "drag", function() {
+       var position = this.getPosition();
+
+       document.getElementById("lat").innerHTML = position.lat();
+       document.getElementById("lng").innerHTML = position.lng();
+     });
+
+
 
      Data.loadOsakaData()
 	 .then(function(data) {

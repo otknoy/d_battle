@@ -20,12 +20,12 @@ Map.getMapBounds = function(map) {
     return bounds;
 };
 
-Map.createMarker = function(map, title, lat, lng) {
+Map.createMarker = function(map, title, lat, lng, draggable) {
     var marker = new google.maps.Marker({
 	position: new google.maps.LatLng(lat, lng),
 	map: map,
 	title : title,
-	draggable: false
+	draggable: draggable
     });
     return marker;
 };
@@ -44,4 +44,3 @@ Map.createCircle = function(map, lat, lng, r, color) {
     var circle = new google.maps.Circle(options);
     return circle;
 };
-
