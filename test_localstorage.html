@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  </head>
+  <body>
+
+    <h1>Local Storage sample</h1>
+
+
+    <h2>Input</h2>
+    <div id="input">
+      <input type="text" value="test">
+      <button>save</button>
+    </div>
+
+
+    <h2>output</h2>
+    <div id="output">
+      <button>restore</button>
+      <div></div>
+    </div>
+
+    <script>
+     var key = "test";
+
+     $("#input button").click(function() {
+       if (!window.localStorage) {
+	 alert("Local Storage is unavailable.");
+	 return;
+       }
+
+       var value = $("#input input").val();
+       console.log(value);
+
+       // save
+       localStorage.setItem(key, value);
+     });
+
+
+     $("#output button").click(function() {
+       // restore
+       var output = localStorage.getItem(key);
+       console.log(output);
+
+       $("#output div").tex<script src="http);
+    </script>
+
+  </body>
+</html>
