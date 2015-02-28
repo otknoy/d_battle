@@ -1,87 +1,50 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="js/app.js"></script>
-    <link rel="stylesheet" href="css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   </head>
   <body>
 
-    <h1>Google Map API</h1>
-    <div id="map-canvas" style="width: 640px; height: 480px"></div>
-    <script>
-     var map = app.map.createMap('map-canvas', 34.705895, 135.494474, 12);
-     console.log(map);
-    </script>
+    <h1>Local Storage sample</h1>
 
-    <h1>Geolocation API sample</h1>
-    <div id="geolocation">
-      <p>latitude:  <span id="lat"></span></p>
-      <p>longitude: <span id="lng"></span></p>
+
+    <h2>Input</h2>
+    <div id="input">
+      <input type="text" value="test">
+      <button>save</button>
     </div>
+
+
+    <h2>output</h2>
+    <div id="output">
+      <button>restore</button>
+      <div></div>
+    </div>
+
     <script>
-     app.getGeolocation()
-	.then(function(coords) {
-	  document.getElementById("lat").innerHTML = coords.latitude;
-	  document.getElementById("lng").innerHTML = coords.longitude;
-	});
-    </script>
+     var key = "test";
 
-
-    <h1>CSV sample</h1>
-    <div id="csv"></div>
-    <script>
-     app.loadCSVFile("data/test.csv")
-	.then(function(data) {
-	  var output = "<table border=\"1\">";
-	  for (var i = 0; i < data.length; i++) {
-	    output += "<tr>"
-	    for (var j = 0; j < data[i].length; j++) {
-	      if (i == 0) {
-		output += "<th>" + data[i][j] + "</th>";
-	      } else {
-		output += "<td>" + data[i][j] + "</td>";
-	      }
-	    }
-	    output += "</tr>"
-	  }
-	  output += "</table>"
-	  document.getElementById("csv").innerHTML = output;
-	});
-    </script>
-
-
-    <h1>Radar Chart</h1>
-    <div id="radar-chart"></div>
-    <link rel="stylesheet" href="css/radar-chart.css">
-    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
-    <script type="text/javascript" src="bower_components/radar-chart-d3/src/radar-chart.js"></script>
-    <script>
-     var data = [
-       {
-	 className: 'germany', // optional can be used for styling
-	 axes: [
-	   {axis: "strength", value: 13, yOffset: 10},
-	   {axis: "intelligence", value: 6},
-	   {axis: "charisma", value: 5},
-	   {axis: "dexterity", value: 9},
-	   {axis: "luck", value: 2, xOffset: -20}
-	 ]
-       },
-       {
-	 className: 'argentina',
-	 axes: [
-	   {axis: "strength", value: 6},
-	   {axis: "intelligence", value: 7},
-	   {axis: "charisma", value: 10},
-	   {axis: "dexterity", value: 13},
-	   {axis: "luck", value: 9}
-	 ]
+     $("#input button").click(function() {
+       if (!window.localStorage) {
+	 alert("Local Storage is unavailable.");
+	 return;
        }
-     ];
 
-     RadarChart.draw("#radar-chart", data);
+       var value = $("#input input").val();
+       console.log(value);
+
+       // save
+       localStorage.setItem(key, value);
+     });
+
+
+     $("#output button").click(function() {
+       // restore
+       var output = localStorage.getItem(key);
+       console.log(output);
+
+       $("#output div").text(output);
+     });
     </script>
 
   </body>
